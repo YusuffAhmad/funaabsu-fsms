@@ -20,7 +20,7 @@ export async function POST(request: Request) {
 
     const formattedSubject = `Re: [${ticket.ticket_number}] ${subject}`;
 
-    // 2. Dispatch via Email Service API (e.g. Postmark/Resend)
+    // 2. Dispatch via Postmark API
     const emailRes = await fetch('https://api.postmarkapp.com/email', {
       method: 'POST',
       headers: {
@@ -29,8 +29,9 @@ export async function POST(request: Request) {
         'X-Postmark-Server-Token': process.env.POSTMARK_SERVER_TOKEN!,
       },
       body: JSON.stringify({
-        From: 'FUNAABSU General Secretary <your_username@student.funaab.edu.ng>',
-        To: 'officialfunaabsu@gmail.com'
+        From: 'FUNAABSU General Secretary <yusuffao.23@student.funaab.edu.ng>', // Replace with your exact verified signature handle
+        To: recipientEmail, 
+        ReplyTo: 'officialfunaabsu@gmail.com', // Direct replies back to the union Gmail
         Subject: formattedSubject,
         TextBody: bodyText,
         Tag: 'Secretariat-Response',
@@ -38,7 +39,9 @@ export async function POST(request: Request) {
     });
 
     if (!emailRes.ok) {
-      throw new Error('Failed to send email via outbound provider');
+      const postmarkError = await emailRes.json();
+      console.error('Postmark API Error:', postmarkError);
+      throw new Error(postmarkError.Message || 'Failed to send email via outbound provider');
     }
 
     // 3. Record outgoing email in correspondence table
