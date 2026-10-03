@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 export async function POST(request: Request) {
   try {
     const { ticketId, recipientEmail, subject, bodyText } = await request.json();
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // 1. Fetch ticket reference
     const { data: ticket, error: ticketErr } = await supabase
