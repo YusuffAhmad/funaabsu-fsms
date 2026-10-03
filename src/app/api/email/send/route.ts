@@ -29,8 +29,8 @@ export async function POST(request: Request) {
         'X-Postmark-Server-Token': process.env.POSTMARK_SERVER_TOKEN!,
       },
       body: JSON.stringify({
-        From: 'yusuffao.23@student.funaab.edu.ng',
-        To: recipientEmail,
+        From: 'FUNAABSU General Secretary <your_username@student.funaab.edu.ng>',
+        To: 'officialfunaabsu@gmail.com'
         Subject: formattedSubject,
         TextBody: bodyText,
         Tag: 'Secretariat-Response',
