@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         'X-Postmark-Server-Token': process.env.POSTMARK_SERVER_TOKEN!,
       },
       body: JSON.stringify({
-        From: 'officialfunaabsu@gmail.com',
+        From: 'yusuffao.23@funaab.student.edu.ng',
         To: recipientEmail,
         Subject: formattedSubject,
         TextBody: bodyText,
